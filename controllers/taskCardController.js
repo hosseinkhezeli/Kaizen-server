@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const {fileWriter} = require("../utility/method");
 
 const boardFilePath = path.join(__dirname, '../database/board_database.json');
 
@@ -9,7 +10,7 @@ const readBoardsFromFile = () => {
   return JSON.parse(data).boards;
 };
 const writeBoardsToFile = (boards) => {
-  fs.writeFileSync(boardFilePath, JSON.stringify({ boards }, null, 2));
+  fileWriter({boards, boardFilePath})
 };
 
 // Get cards of a specific column by column ID
