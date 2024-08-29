@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const jwt = require('jsonwebtoken');
-const {generateOTP, fileWriter} = require("../utility/method");
+
+const {generateOTP,generateToken} = require("../utility/method");
 
 const userFilePath = path.join(__dirname, '../database/user_database.json');
 
@@ -10,8 +10,8 @@ const readUsersFromFile = () => {
   return JSON.parse(data);
 };
 
-const writeUsersToFile = (users) => {
-  fileWriter({users,userFilePath})
+const writeUsersToFile = (users,path) => {
+  fs.writeFileSync(path, JSON.stringify({ users }, null, 2));
 };
 
 
@@ -19,7 +19,6 @@ const writeUsersToFile = (users) => {
 exports.signUpUser = (req, res) => {
   const { username, email, phoneNumber, fullName } = req.body;
   const users = readUsersFromFile().users;
-
   // Check if user already exists
   if (users.some(user => user.phoneNumber === phoneNumber)) {
     return res.status(409).json({ message: 'User already exists!' });
@@ -30,13 +29,14 @@ exports.signUpUser = (req, res) => {
     userId,
     username,
     email,
+    fullName,
     phoneNumber,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
 
   users.push(newUser);
-  writeUsersToFile(users);
+  writeUsersToFile(users,userFilePath);
   res.status(201).json({ message: 'User registered successfully!', userId });
 };
 
@@ -56,7 +56,7 @@ exports.signInUser = (req, res) => {
   // Generate a JWT token for the user
   const token = generateToken(user.userId);
 
-  writeUsersToFile(users);
+  writeUsersToFile(users,userFilePath);
   res.status(200).json({
     message: 'Login successful!',
     userId: user.userId,
@@ -80,17 +80,17 @@ exports.sendOTP = (req, res) => {
 
   console.log(`Sending OTP ${otpCode} to ${phoneNumber}`);
 
-  writeUsersToFile(users);
+  writeUsersToFile(users,userFilePath);
   res.status(200).json({ message: 'OTP sent successfully!', otpCode, phoneNumber });
 };
 
 exports.getUserProfile = (req, res) => {
-  const userId = req.user.userId; // Get userId from the request object set by the middleware
-  const users = readUsersFromFile().users;
-  const user = users.find(u => u.userId === userId);
+  const username = req?.body?.user?.username; // Get userId from the request object set by the middleware
+  const users = readUsersFromFile()?.users;
+  const user = users.find(u => u?.username === username);
 
   if (!user) {
-    return res.status(404).json({ message: 'User not found!' });
+    return res?.status(404).json({ message: 'User not found!' });
   }
 
   res.status(200).json({
