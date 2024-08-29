@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const jwt = require('jsonwebtoken');
+const {generateOTP, fileWriter} = require("../utility/method");
 
 const userFilePath = path.join(__dirname, '../database/user_database.json');
-const JWT_SECRET = 'your_jwt_secret'; // Use an environment variable in production
 
 const readUsersFromFile = () => {
   const data = fs.readFileSync(userFilePath, 'utf8');
@@ -11,14 +11,12 @@ const readUsersFromFile = () => {
 };
 
 const writeUsersToFile = (users) => {
-  fs.writeFileSync(userFilePath, JSON.stringify({ users }, null, 2));
+  fileWriter({users,userFilePath})
 };
 
-const generateToken = (userId) => {
-  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '1d' }); // Token expires in 1 day
-};
 
-exports.registerUser = (req, res) => {
+
+exports.signUpUser = (req, res) => {
   const { username, email, phoneNumber, fullName } = req.body;
   const users = readUsersFromFile().users;
 
@@ -42,7 +40,7 @@ exports.registerUser = (req, res) => {
   res.status(201).json({ message: 'User registered successfully!', userId });
 };
 
-exports.loginUser = (req, res) => {
+exports.signInUser = (req, res) => {
   const { phoneNumber, otp } = req.body; // Assuming OTP is still used for login
   const users = readUsersFromFile().users;
   const user = users.find(u => u.phoneNumber === phoneNumber);
@@ -104,6 +102,3 @@ exports.getUserProfile = (req, res) => {
     updatedAt: user.updatedAt,
   });
 };
-
-// Utility function to generate OTP
-const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
