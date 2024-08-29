@@ -1,0 +1,229 @@
+{
+  "boards": [
+    {
+      "id": "board1",
+      "title": "Project Alpha",
+      "description": "This board is dedicated to managing Project Alpha.",
+      "columns": [
+        {
+          "id": "column1",
+          "title": "To Do Not To Do",
+          "taskCards": [
+            {
+              "id": "card1",
+              "title": "Design the Homepage",
+              "description": "Create a mockup for the new homepage.",
+              "startDate": "2023-10-01T00:00:00.000Z",
+              "dueDate": "2023-10-10T00:00:00.000Z",
+              "labels": [
+                "design"
+              ],
+              "checklist": [
+                {
+                  "id": "check1",
+                  "title": "Gather Requirements",
+                  "isChecked": true
+                },
+                {
+                  "id": "check2",
+                  "title": "Create Mockup",
+                  "isChecked": false
+                }
+              ],
+              "attachments": [
+                {
+                  "id": "attach1",
+                  "title": "Wireframe",
+                  "description": "Initial wireframe",
+                  "type": "file"
+                }
+              ],
+              "comments": [
+                {
+                  "id": "comment1",
+                  "author": "alice_jones",
+                  "content": "This looks promising!",
+                  "timestamp": "2023-10-02T12:00:00.000Z"
+                }
+              ],
+              "status": {
+                "id": "status1",
+                "type": "todo",
+                "label": "To Do"
+              },
+              "priority": "High",
+              "assignedTo": [
+                "alice_jones"
+              ],
+              "coverImage": "https://example.com/cover/homepage_mockup.jpg",
+              "tags": [
+                {
+                  "id": "tag1",
+                  "title": "Urgent",
+                  "color": "red"
+                }
+              ]
+            }
+          ],
+          "position": 1
+        },
+        {
+          "id": "column2",
+          "title": "In Progress",
+          "taskCards": [],
+          "position": 2
+        },
+        {
+          "id": "column3",
+          "title": "Completed",
+          "taskCards": [],
+          "position": 3
+        },
+        {
+          "id": "id_2rvd30ttp",
+          "title": "my column",
+          "taskCards": [],
+          "position": 3
+        }
+      ],
+      "members": [
+        {
+          "id": "alice_jones",
+          "fullName": "Alice Jones",
+          "profilePictureUrl": "https://example.com/profile/alice_jones.jpg"
+        },
+        {
+          "id": "bob_smith",
+          "fullName": "Bob Smith",
+          "profilePictureUrl": "https://example.com/profile/bob_smith.jpg"
+        }
+      ],
+      "memberCount": 2,
+      "createdAt": "2023-09-25T00:00:00.000Z",
+      "updatedAt": "2023-10-01T00:00:00.000Z",
+      "background": "https://example.com/backgrounds/board_alpha.jpg",
+      "permissions": "private",
+      "labels": [
+        "urgent",
+        "design"
+      ],
+      "stickers": [
+        "sticker1",
+        "sticker2"
+      ],
+      "activity": [
+        {
+          "id": "activity1",
+          "action": "Board created",
+          "timestamp": "2023-09-25T00:00:00.000Z",
+          "actor": "bob_smith"
+        },
+        {
+          "id": "activity2",
+          "action": "Card added: Design the Homepage",
+          "timestamp": "2023-10-01T12:00:00.000Z",
+          "actor": "alice_jones"
+        }
+      ]
+    },
+    {
+      "id": "board2",
+      "title": "Marketing Campaign",
+      "description": "This board is designed for managing the upcoming marketing campaign.",
+      "columns": [
+        {
+          "id": "column1",
+          "title": "Backlog",
+          "taskCards": [],
+          "position": 1
+        },
+        {
+          "id": "column2",
+          "title": "In Progress",
+          "taskCards": [
+            {
+              "id": "card2",
+              "title": "Social Media Strategy",
+              "description": "Develop a comprehensive strategy for social media marketing.",
+              "startDate": "2023-10-05T00:00:00.000Z",
+              "dueDate": "2023-10-15T00:00:00.000Z",
+              "labels": [
+                "strategy"
+              ],
+              "checklist": [
+                {
+                  "id": "check3",
+                  "title": "Identify Target Audience",
+                  "isChecked": false
+                },
+                {
+                  "id": "check4",
+                  "title": "Choose Platforms",
+                  "isChecked": false
+                }
+              ],
+              "attachments": [],
+              "comments": [],
+              "status": {
+                "id": "status2",
+                "type": "in-progress",
+                "label": "In Progress"
+              },
+              "priority": "Medium",
+              "assignedTo": [
+                "bob_smith"
+              ],
+              "coverImage": "",
+              "tags": []
+            }
+          ],
+          "position": 2
+        },
+        {
+          "id": "column3",
+          "title": "Completed",
+          "taskCards": [],
+          "position": 3
+        }
+      ],
+      "members": [
+        {
+          "id": "bob_smith",
+          "fullName": "Bob Smith",
+          "profilePictureUrl": "https://example.com/profile/bob_smith.jpg"
+        },
+        {
+          "id": "charlie_brown",
+          "fullName": "Charlie Brown",
+          "profilePictureUrl": "https://example.com/profile/charlie_brown.jpg"
+        }
+      ],
+      "memberCount": 2,
+      "createdAt": "2023-09-28T00:00:00.000Z",
+      "updatedAt": "2023-10-01T00:00:00.000Z",
+      "background": "https://example.com/backgrounds/board_marketing.jpg",
+      "permissions": "public",
+      "labels": [
+        "marketing",
+        "campaign"
+      ],
+      "stickers": [
+        "sticker3"
+      ],
+      "activity": [
+        {
+          "id": "activity3",
+          "action": "Board created",
+          "timestamp": "2023-09-28T00:00:00.000Z",
+          "actor": "bob_smith"
+        },
+        {
+          "id": "activity4",
+          "action": "Card added: Social Media Strategy",
+          "timestamp": "2023-10-01T12:00:00.000Z",
+          "actor": "charlie_brown"
+        }
+      ]
+    }
+  ]
+}
