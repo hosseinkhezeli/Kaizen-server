@@ -17,7 +17,7 @@ const writeUsersToFile = (users,path) => {
 
 
 exports.signUpUser = (req, res) => {
-  const { username, email, phoneNumber, fullName } = req.body;
+  const { phoneNumber } = req.body;
   const users = readUsersFromFile().users;
   // Check if user already exists
   if (users.some(user => user.phoneNumber === phoneNumber)) {
@@ -25,11 +25,10 @@ exports.signUpUser = (req, res) => {
   }
 
   const userId = Date.now().toString();
+  const username=Date.now().toString()
   const newUser = {
     userId,
     username,
-    email,
-    fullName,
     phoneNumber,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -93,12 +92,5 @@ exports.getUserProfile = (req, res) => {
     return res?.status(404).json({ message: 'User not found!' });
   }
 
-  res.status(200).json({
-    userId: user.userId,
-    username: user.username,
-    email: user.email,
-    phoneNumber: user.phoneNumber,
-    createdAt: user.createdAt,
-    updatedAt: user.updatedAt,
-  });
+  res.status(200).json(user);
 };

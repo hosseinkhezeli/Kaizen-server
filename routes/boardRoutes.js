@@ -12,6 +12,8 @@ router.put('/:id', boardController.updateBoard);
 router.delete('/:id', boardController.deleteBoard);
 router.post('/assign', boardController.assignUsersToBoard);
 
+//Dashboard routes
+router.get('/dashboard/data', boardController.getDashboardInfo);
 // Column routes
 router.get('/:boardId/columns', columnController.getColumnsByBoardId);
 router.get(

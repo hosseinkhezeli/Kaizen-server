@@ -14,6 +14,37 @@ const writeBoardsToFile = (boards) => {
   fs.writeFileSync(boardFilePath, JSON.stringify({ boards }, null, 2));
 };
 
+// Get dashboard info
+exports.getDashboardInfo = (req, res) => {
+  const userId = req.query.userId;
+  if (!userId) {
+    return res.status(400).json({ message: 'User ID is required' });
+  }
+
+  const boards = readBoardsFromFile();
+  const userBoards = boards.filter(board =>
+    board.members.some(member => member.id === userId)
+  );
+
+
+  const boardsInfo = userBoards?.map(board => ({
+    id: board.id,
+    title: board.title,
+    description: board.description,
+    labels: board.labels,
+    background: board.background
+  }));
+
+  setTimeout(() => {
+    res.json({
+      count: userBoards.length,
+      data: boardsInfo
+    });
+  }, 2000); 
+};
+
+
+
 // Create a board
 exports.createBoard = (req, res) => {
   const { title, description } = req.body;
@@ -41,7 +72,11 @@ exports.createBoard = (req, res) => {
 // Get all boards
 exports.getAllBoards = (req, res) => {
   const boards = readBoardsFromFile();
-  res.json(boards);
+  const userBoards =boards.filter(b => b.members.find(member=>member.id===req.body.username) ) ;
+  if (!userBoards.length) {
+    return res.status(404).json({ message: 'Board not found' });
+  }
+  res.json(userBoards);
 };
 
 // Get a specific board by ID
