@@ -7,7 +7,7 @@
       "phoneNumber": "+12345678901",
       "otpCode": "231234",
       "fullName": "Alice Jones",
-      "profilePictureUrl": "https://example.com/profile/alice_jones.jpg",
+      "profilePictureUrl": "https://mui.com/static/images/avatar/1.jpg",
       "createdAt": "2023-01-15T00:00:00.000Z",
       "updatedAt": "2023-10-01T00:00:00.000Z",
       "boards": [
@@ -29,7 +29,7 @@
       "phoneNumber": "+19876543210",
       "otpCode": "654321",
       "fullName": "Bob Smith",
-      "profilePictureUrl": "https://example.com/profile/bob_smith.jpg",
+      "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg",
       "createdAt": "2023-02-20T00:00:00.000Z",
       "updatedAt": "2023-10-01T00:00:00.000Z",
       "boards": [
@@ -50,7 +50,7 @@
       "phoneNumber": "+12345678902",
       "otpCode": null,
       "fullName": "Charlie Brown",
-      "profilePictureUrl": "https://example.com/profile/charlie_brown.jpg",
+      "profilePictureUrl": "https://mui.com/static/images/avatar/3.jpg",
       "createdAt": "2023-03-10T00:00:00.000Z",
       "updatedAt": "2023-10-01T00:00:00.000Z",
       "boards": [],
@@ -68,7 +68,7 @@
       "email": "diana.prince@example.com",
       "phoneNumber": "+10987654321",
       "fullName": "Diana Prince",
-      "profilePictureUrl": "https://example.com/profile/diana_prince.jpg",
+      "profilePictureUrl": "https://mui.com/static/images/avatar/4.jpg",
       "createdAt": "2023-04-05T00:00:00.000Z",
       "updatedAt": "2023-10-01T00:00:00.000Z",
       "boards": [
@@ -95,9 +95,18 @@
     {
       "userId": "1725636147152",
       "phoneNumber": "09912676508",
+      "profilePictureUrl": "https://mui.com/static/images/avatar/5.jpg",
       "createdAt": "2024-09-06T15:22:27.152Z",
       "updatedAt": "2024-09-06T15:22:27.152Z",
-      "lastLogin": "2024-09-06T22:05:04.368Z"
+      "lastLogin": "2024-09-24T22:26:28.707Z"
+    },
+    {
+      "userId": "1726087859861",
+      "username": "1726087859861",
+      "phoneNumber": "+989368634672",
+      "createdAt": "2024-09-11T20:50:59.861Z",
+      "updatedAt": "2024-09-11T20:50:59.861Z",
+      "lastLogin": "2024-09-11T21:10:36.347Z"
     }
   ]
 }

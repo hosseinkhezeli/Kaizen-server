@@ -29,7 +29,7 @@ router.post('/:boardId/columns', columnController.createColumn);
 // Task Card routes
 router.get('/columns/:columnId/cards', taskCardController.getCardsByColumnId);
 router.get('/columns/:columnId/cards/:cardId', taskCardController.getCardById);
-router.put('/columns/:columnId/cards/:cardId', taskCardController.updateCard);
+router.put('/columns/move-card', taskCardController.updateCard);
 router.delete(
   '/columns/:columnId/cards/:cardId',
   taskCardController.deleteCard,

@@ -26,19 +26,38 @@ exports.getDashboardInfo = (req, res) => {
     board.members.some(member => member.id === userId)
   );
 
+  const userColumns = userBoards?.reduce((acc, curr) => {
+    if (acc?.length) {
+      return [...acc, curr.columns];
+    } else {
+      return [curr?.columns];
+    }
+  }, []);
+
+  const highPriorityCards = userColumns?.flat()?.reduce((acc, curr,idx) => {
+    // console.log(curr,idx)
+    if (curr?.taskCards?.length) {
+
+      const foundCard = curr.taskCards.find(card => card.priority === 'High');
+      if (foundCard) {
+        acc.push(foundCard); // Add found card to the accumulator
+      }
+    }
+    return acc; // Ensure to return the accumulator
+  }, []);
 
   const boardsInfo = userBoards?.map(board => ({
     id: board.id,
     title: board.title,
     description: board.description,
     labels: board.labels,
-    background: board.background
+    background: board.background,
   }));
 
   setTimeout(() => {
     res.json({
       count: userBoards.length,
-      data: boardsInfo
+      data: {boards:boardsInfo,cards:highPriorityCards}
     });
   }, 2000); 
 };
@@ -86,7 +105,11 @@ exports.getBoardById = (req, res) => {
   if (!board) {
     return res.status(404).json({ message: 'Board not found' });
   }
-  res.json(board);
+  
+  setTimeout(() => {
+    res.json(board)
+  }, 2000); 
+
 };
 
 // Update a board

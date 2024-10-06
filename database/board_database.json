@@ -55,7 +55,7 @@
               "assignedTo": [
                 "alice_jones"
               ],
-              "coverImage": "https://example.com/cover/homepage_mockup.jpg",
+              "coverImage": "https://www.stockvault.net/data/2016/03/21/189207/preview16.jpg",
               "tags": [
                 {
                   "id": "tag1",
@@ -90,12 +90,12 @@
         {
           "id": "alice_jones",
           "fullName": "Alice Jones",
-          "profilePictureUrl": "https://example.com/profile/alice_jones.jpg"
+          "profilePictureUrl": "https://mui.com/static/images/avatar/1.jpg"
         },
         {
           "id": "bob_smith",
           "fullName": "Bob Smith",
-          "profilePictureUrl": "https://example.com/profile/bob_smith.jpg"
+          "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
         },
         {
           "id": "1725636147152",
@@ -106,7 +106,7 @@
       "memberCount": 2,
       "createdAt": "2023-09-25T00:00:00.000Z",
       "updatedAt": "2023-10-01T00:00:00.000Z",
-      "background": "https://www.stockvault.net/data/2013/03/05/142576/preview16.jpg",
+      "background": "https://www.stockvault.net/data/2016/03/21/189207/preview16.jpg",
       "permissions": "private",
       "labels": [
         "urgent",
@@ -195,12 +195,12 @@
         {
           "id": "bob_smith",
           "fullName": "Bob Smith",
-          "profilePictureUrl": "https://example.com/profile/bob_smith.jpg"
+          "profilePictureUrl": "https://mui.com/static/images/avatar/1.jpg"
         },
         {
           "id": "charlie_brown",
           "fullName": "Charlie Brown",
-          "profilePictureUrl": "https://example.com/profile/charlie_brown.jpg"
+          "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
         },
         {
           "id": "1725636147152",
@@ -243,9 +243,15 @@
         {
           "id": "column1",
           "title": "To Do Not To Do",
+          "taskCards": [],
+          "position": 1
+        },
+        {
+          "id": "id_2rvd30ttp",
+          "title": "my column",
           "taskCards": [
             {
-              "id": "card1",
+              "id": "card3",
               "title": "Design the Homepage",
               "description": "Create a mockup for the new homepage.",
               "startDate": "2023-10-01T00:00:00.000Z",
@@ -290,7 +296,7 @@
               "assignedTo": [
                 "alice_jones"
               ],
-              "coverImage": "https://example.com/cover/homepage_mockup.jpg",
+              "coverImage": "https://www.stockvault.net/data/2013/03/24/143213/preview16.jpg",
               "tags": [
                 {
                   "id": "tag1",
@@ -300,12 +306,129 @@
               ]
             }
           ],
+          "position": 3
+        },
+        {
+          "id": "column1",
+          "title": "To Do Not To Do",
+          "taskCards": [],
           "position": 1
         },
         {
           "id": "column2",
           "title": "In Progress",
-          "taskCards": [],
+          "taskCards": [
+            {
+              "id": "card5",
+              "title": "Functionality",
+              "description": "Create a mockup for the new CPanel.",
+              "startDate": "2023-10-01T00:00:00.000Z",
+              "dueDate": "2023-10-10T00:00:00.000Z",
+              "labels": [
+                "design"
+              ],
+              "checklist": [
+                {
+                  "id": "check1",
+                  "title": "Gather Requirements",
+                  "isChecked": true
+                },
+                {
+                  "id": "check2",
+                  "title": "Create Mockup",
+                  "isChecked": false
+                }
+              ],
+              "attachments": [
+                {
+                  "id": "attach1",
+                  "title": "Wireframe",
+                  "description": "Initial wireframe",
+                  "type": "file"
+                }
+              ],
+              "comments": [
+                {
+                  "id": "comment1",
+                  "author": "alice_jones",
+                  "content": "This looks promising!",
+                  "timestamp": "2023-10-02T12:00:00.000Z"
+                }
+              ],
+              "status": {
+                "id": "status1",
+                "type": "todo",
+                "label": "To Do"
+              },
+              "priority": "High",
+              "assignedTo": [
+                "alice_jones"
+              ],
+              "coverImage": "https://www.stockvault.net/data/2013/03/24/143213/preview16.jpg",
+              "tags": [
+                {
+                  "id": "tag1",
+                  "title": "Urgent",
+                  "color": "red"
+                }
+              ]
+            },
+            {
+              "id": "card4",
+              "title": "Design the Panel",
+              "description": "Create a mockup for the new CPanel.",
+              "startDate": "2023-10-01T00:00:00.000Z",
+              "dueDate": "2023-10-10T00:00:00.000Z",
+              "labels": [
+                "design"
+              ],
+              "checklist": [
+                {
+                  "id": "check1",
+                  "title": "Gather Requirements",
+                  "isChecked": true
+                },
+                {
+                  "id": "check2",
+                  "title": "Create Mockup",
+                  "isChecked": false
+                }
+              ],
+              "attachments": [
+                {
+                  "id": "attach1",
+                  "title": "Wireframe",
+                  "description": "Initial wireframe",
+                  "type": "file"
+                }
+              ],
+              "comments": [
+                {
+                  "id": "comment1",
+                  "author": "alice_jones",
+                  "content": "This looks promising!",
+                  "timestamp": "2023-10-02T12:00:00.000Z"
+                }
+              ],
+              "status": {
+                "id": "status1",
+                "type": "todo",
+                "label": "To Do"
+              },
+              "priority": "High",
+              "assignedTo": [
+                "alice_jones"
+              ],
+              "coverImage": "https://www.stockvault.net/data/2013/03/24/143213/preview16.jpg",
+              "tags": [
+                {
+                  "id": "tag1",
+                  "title": "Urgent",
+                  "color": "red"
+                }
+              ]
+            }
+          ],
           "position": 2
         },
         {
@@ -317,7 +440,63 @@
         {
           "id": "id_2rvd30ttp",
           "title": "my column",
-          "taskCards": [],
+          "taskCards": [
+            {
+              "id": "card3",
+              "title": "Design the Homepage",
+              "description": "Create a mockup for the new homepage.",
+              "startDate": "2023-10-01T00:00:00.000Z",
+              "dueDate": "2023-10-10T00:00:00.000Z",
+              "labels": [
+                "design"
+              ],
+              "checklist": [
+                {
+                  "id": "check1",
+                  "title": "Gather Requirements",
+                  "isChecked": true
+                },
+                {
+                  "id": "check2",
+                  "title": "Create Mockup",
+                  "isChecked": false
+                }
+              ],
+              "attachments": [
+                {
+                  "id": "attach1",
+                  "title": "Wireframe",
+                  "description": "Initial wireframe",
+                  "type": "file"
+                }
+              ],
+              "comments": [
+                {
+                  "id": "comment1",
+                  "author": "alice_jones",
+                  "content": "This looks promising!",
+                  "timestamp": "2023-10-02T12:00:00.000Z"
+                }
+              ],
+              "status": {
+                "id": "status1",
+                "type": "todo",
+                "label": "To Do"
+              },
+              "priority": "High",
+              "assignedTo": [
+                "alice_jones"
+              ],
+              "coverImage": "https://www.stockvault.net/data/2013/03/24/143213/preview16.jpg",
+              "tags": [
+                {
+                  "id": "tag1",
+                  "title": "Urgent",
+                  "color": "red"
+                }
+              ]
+            }
+          ],
           "position": 3
         }
       ],
@@ -325,12 +504,12 @@
         {
           "id": "alice_jones",
           "fullName": "Alice Jones",
-          "profilePictureUrl": "https://example.com/profile/alice_jones.jpg"
+          "profilePictureUrl": "https://mui.com/static/images/avatar/1.jpg"
         },
         {
           "id": "bob_smith",
           "fullName": "Bob Smith",
-          "profilePictureUrl": "https://example.com/profile/bob_smith.jpg"
+          "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
         },
         {
           "id": "1725636147152",

@@ -65,34 +65,48 @@ exports.getCardById = (req, res) => {
 
 // Update a specific card by ID
 exports.updateCard = (req, res) => {
-  const { columnId, cardId } = req.params;
+  const { originColumnId, destinationColumnId, cardId,boardId } = req.body; // Get IDs from the request body
   const boards = readBoardsFromFile();
 
-  const board = boards.find(
-    (b) => b.lists && b.lists.some((column) => column.id === columnId),
-  );
-  if (!board) {
-    return res.status(404).json({ message: 'Column not found in any board' });
-  }
+    // Find the board by ID
+    const board = JSON.parse(JSON.stringify(boards?.find(board => board.id === boardId)));
+    if (!board) {
+        throw new Error('Board not found');
+    }
+    
+    // Find the origin column
+    const originColumn = board.columns.find(column => column.id === originColumnId);
+    if (!originColumn) {
+      throw new Error('Origin column not found');
+    }
+    
+    // Find the destination column
+    const destinationColumn = board.columns.find(column => column.id === destinationColumnId);
+    if (!destinationColumn) {
+      throw new Error('Destination column not found');
+    }
+    
+    // Find the task card in the origin column
+    const cardIndex = originColumn.taskCards.findIndex(card => card.id === cardId);
+    if (cardIndex === -1) {
+      throw new Error('Task card not found in the origin column');
+    }
 
-  const column = board.lists.find((c) => c.id === columnId);
-  if (!column) {
-    return res.status(404).json({ message: 'Column not found' });
-  }
 
-  const cardIndex = column.taskCards.findIndex((c) => c.id === cardId);
-  if (cardIndex === -1) {
-    return res.status(404).json({ message: 'Card not found' });
-  }
+    // Move the task card
+    const [updatedCard] = originColumn.taskCards.splice(cardIndex, 1);
+    destinationColumn.taskCards.push(updatedCard);
+    const otherColumns = board.columns?.filter((column)=>column.id!==originColumnId||column.id!==destinationColumnId)
+    const updatedBoard ={...board,columns:[originColumn,destinationColumn,otherColumns].flat()}
 
-  const updatedCard = {
-    ...column.taskCards[cardIndex],
-    ...req.body,
-  };
+    const updatedBoards = [boards?.filter((board)=>board.id!==boardId),updatedBoard].flat()
 
-  column.taskCards[cardIndex] = updatedCard;
-  writeBoardsToFile(boards);
-  res.json(updatedCard);
+console.log(updatedBoards[0])
+    // Write the updated boards back to the file
+    writeBoardsToFile(updatedBoards);
+
+    // Return the updated card
+    return res.json(updatedCard);
 };
 
 // Delete a specific card by ID
