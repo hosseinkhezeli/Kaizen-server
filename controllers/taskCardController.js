@@ -96,17 +96,17 @@ exports.updateCard = (req, res) => {
     // Move the task card
     const [updatedCard] = originColumn.taskCards.splice(cardIndex, 1);
     destinationColumn.taskCards.push(updatedCard);
-    const otherColumns = board.columns?.filter((column)=>column.id!==originColumnId||column.id!==destinationColumnId)
+
+    const otherColumns = board.columns?.filter((column)=>![originColumnId,destinationColumnId].includes(column.id))
+
     const updatedBoard ={...board,columns:[originColumn,destinationColumn,otherColumns].flat()}
 
     const updatedBoards = [boards?.filter((board)=>board.id!==boardId),updatedBoard].flat()
-
-console.log(updatedBoards[0])
     // Write the updated boards back to the file
     writeBoardsToFile(updatedBoards);
 
     // Return the updated card
-    return res.json(updatedCard);
+    return res.json([originColumn,destinationColumn,otherColumns].flat());
 };
 
 // Delete a specific card by ID
