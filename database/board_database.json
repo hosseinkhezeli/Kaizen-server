@@ -53,7 +53,16 @@
               },
               "priority": "High",
               "assignedTo": [
-                "alice_jones"
+                {
+                  "id": "alice_jones",
+                  "fullName": "Alice Jones",
+                  "profilePictureUrl": "https://mui.com/static/images/avatar/1.jpg"
+                },
+                {
+                  "id": "bob_smith",
+                  "fullName": "Bob Smith",
+                  "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
+                },
               ],
               "coverImage": "https://www.stockvault.net/data/2016/03/21/189207/preview16.jpg",
               "tags": [
@@ -83,7 +92,7 @@
           "id": "id_2rvd30ttp",
           "title": "my column",
           "taskCards": [],
-          "position": 3
+          "position": 4
         }
       ],
       "members": [
@@ -176,7 +185,16 @@
               },
               "priority": "Medium",
               "assignedTo": [
-                "bob_smith"
+                {
+                  "id": "alice_jones",
+                  "fullName": "Alice Jones",
+                  "profilePictureUrl": "https://mui.com/static/images/avatar/1.jpg"
+                },
+                {
+                  "id": "bob_smith",
+                  "fullName": "Bob Smith",
+                  "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
+                },
               ],
               "coverImage": "",
               "tags": []
@@ -294,7 +312,16 @@
               },
               "priority": "High",
               "assignedTo": [
-                "alice_jones"
+                {
+                  "id": "alice_jones",
+                  "fullName": "Alice Jones",
+                  "profilePictureUrl": "https://mui.com/static/images/avatar/1.jpg"
+                },
+                {
+                  "id": "bob_smith",
+                  "fullName": "Bob Smith",
+                  "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
+                },
               ],
               "coverImage": "https://www.stockvault.net/data/2013/03/24/143213/preview16.jpg",
               "tags": [
@@ -362,7 +389,16 @@
               },
               "priority": "High",
               "assignedTo": [
-                "alice_jones"
+                {
+                  "id": "alice_jones",
+                  "fullName": "Alice Jones",
+                  "profilePictureUrl": "https://mui.com/static/images/avatar/1.jpg"
+                },
+                {
+                  "id": "bob_smith",
+                  "fullName": "Bob Smith",
+                  "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
+                },
               ],
               "coverImage": "https://www.stockvault.net/data/2013/03/24/143213/preview16.jpg",
               "tags": [
@@ -417,7 +453,16 @@
               },
               "priority": "High",
               "assignedTo": [
-                "alice_jones"
+                {
+                  "id": "alice_jones",
+                  "fullName": "Alice Jones",
+                  "profilePictureUrl": "https://mui.com/static/images/avatar/1.jpg"
+                },
+                {
+                  "id": "bob_smith",
+                  "fullName": "Bob Smith",
+                  "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
+                },
               ],
               "coverImage": "https://www.stockvault.net/data/2013/03/24/143213/preview16.jpg",
               "tags": [
@@ -485,7 +530,16 @@
               },
               "priority": "High",
               "assignedTo": [
-                "alice_jones"
+                {
+                  "id": "alice_jones",
+                  "fullName": "Alice Jones",
+                  "profilePictureUrl": "https://mui.com/static/images/avatar/1.jpg"
+                },
+                {
+                  "id": "bob_smith",
+                  "fullName": "Bob Smith",
+                  "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
+                },
               ],
               "coverImage": "https://www.stockvault.net/data/2013/03/24/143213/preview16.jpg",
               "tags": [
