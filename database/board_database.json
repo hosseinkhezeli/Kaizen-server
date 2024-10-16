@@ -62,7 +62,7 @@
                   "id": "bob_smith",
                   "fullName": "Bob Smith",
                   "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
-                },
+                }
               ],
               "coverImage": "https://www.stockvault.net/data/2016/03/21/189207/preview16.jpg",
               "tags": [
@@ -194,7 +194,7 @@
                   "id": "bob_smith",
                   "fullName": "Bob Smith",
                   "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
-                },
+                }
               ],
               "coverImage": "",
               "tags": []
@@ -321,7 +321,7 @@
                   "id": "bob_smith",
                   "fullName": "Bob Smith",
                   "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
-                },
+                }
               ],
               "coverImage": "https://www.stockvault.net/data/2013/03/24/143213/preview16.jpg",
               "tags": [
@@ -398,7 +398,7 @@
                   "id": "bob_smith",
                   "fullName": "Bob Smith",
                   "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
-                },
+                }
               ],
               "coverImage": "https://www.stockvault.net/data/2013/03/24/143213/preview16.jpg",
               "tags": [
@@ -462,7 +462,7 @@
                   "id": "bob_smith",
                   "fullName": "Bob Smith",
                   "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
-                },
+                }
               ],
               "coverImage": "https://www.stockvault.net/data/2013/03/24/143213/preview16.jpg",
               "tags": [
@@ -539,7 +539,7 @@
                   "id": "bob_smith",
                   "fullName": "Bob Smith",
                   "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg"
-                },
+                }
               ],
               "coverImage": "https://www.stockvault.net/data/2013/03/24/143213/preview16.jpg",
               "tags": [
@@ -598,6 +598,25 @@
           "actor": "alice_jones"
         }
       ]
+    },
+    {
+      "id": "board4",
+      "title": "Digi next project",
+      "description": "Diginext project",
+      "lists": [],
+      "members": [
+        {
+          "id": "1725636147152",
+          "profilePictureUrl": "https://mui.com/static/images/avatar/5.jpg"
+        }
+      ],
+      "memberCount": 1,
+      "createdAt": "2024-10-16T23:54:04.644Z",
+      "updatedAt": "2024-10-16T23:54:04.644Z",
+      "permissions": "private",
+      "labels": [],
+      "stickers": [],
+      "activity": []
     }
   ]
 }

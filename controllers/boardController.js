@@ -3,17 +3,24 @@ const path = require('path');
 
 
 const boardFilePath = path.join(__dirname, '../database/board_database.json');
-
+const usersFilePath = path.join(__dirname, '../database/user_database.json');
 // Utility functions to read and write boards
 const readBoardsFromFile = () => {
   const data = fs.readFileSync(boardFilePath, 'utf8');
   return JSON.parse(data).boards;
 };
 
+const readUsersFromFile = () => {
+  const data = fs.readFileSync(usersFilePath, 'utf8');
+  return JSON.parse(data).users;
+};
+
 const writeBoardsToFile = (boards) => {
   fs.writeFileSync(boardFilePath, JSON.stringify({ boards }, null, 2));
 };
-
+const writeUsersToFile = (users) => {
+  fs.writeFileSync(usersFilePath, JSON.stringify({ users }, null, 2));
+};
 // Get dashboard info
 exports.getDashboardInfo = (req, res) => {
   const userId = req.query.userId;
@@ -66,26 +73,39 @@ exports.getDashboardInfo = (req, res) => {
 
 // Create a board
 exports.createBoard = (req, res) => {
-  const { title, description } = req.body;
+  const { title, description,userId } = req.body;
+  const users = readUsersFromFile()
+  const otherUsers=users.filter((user)=>user?.userId!==userId)
+  const user=JSON.parse(JSON.stringify(users.find(user=>user.userId===userId)))
   const boards = readBoardsFromFile();
   const newBoard = {
     id: `board${boards.length + 1}`,
     title,
     description,
     lists: [],
-    members: [],
-    memberCount: 0,
+    members: [{
+      "id": user?.userId,
+      "fullName": user?.fullName,
+      "profilePictureUrl": user?.profilePictureUrl
+    }],
+    memberCount: 1,
     createdAt: new Date(),
     updatedAt: new Date(),
-    background: '',
+    background: undefined,
     permissions: 'private',
     labels: [],
     stickers: [],
     activity: []
   };
+  if(user?.boards?.length>0){
+    user.boards.push(`board${boards.length + 1}`)
+  }else{
+    user.boards=[`board${boards.length + 1}`]
+  }
   boards.push(newBoard);
   writeBoardsToFile(boards);
-  res.status(201).json(newBoard);
+  writeUsersToFile([...otherUsers,user])
+  res.status(200).json(newBoard);
 };
 
 // Get all boards
