@@ -1,9 +1,12 @@
-import { EdgeConfig } from '@vercel/edge-config';
+
+const { EdgeConfig } = require('@vercel/edge-config');
 import { generateOTP, generateToken } from '../utility/method';
+// Import the EdgeConfig class
 
-const edgeConfig = new EdgeConfig(process.env.EDGE_CONFIG_ID); // Replace with your Edge Config ID
-
-// Function to read users from Edge Config
+// Initialize EdgeConfig with your Edge Config ID
+const edgeConfig = new EdgeConfig(process.env.EDGE_CONFIG_ID);
+console.log('Edge Config ID:', process.env.EDGE_CONFIG_ID);
+// Example function to read users from Edge Config
 const readUsersFromConfig = async () => {
   const usersData = await edgeConfig.get('users');
   return usersData ? JSON.parse(usersData) : [];
