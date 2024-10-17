@@ -1,115 +1,115 @@
-{
-  "users": [
-    {
-      "userId": "user1",
-      "username": "alice_jones",
-      "email": "alice.jones@example.com",
-      "phoneNumber": "+12345678901",
-      "otpCode": "231234",
-      "fullName": "Alice Jones",
-      "profilePictureUrl": "https://mui.com/static/images/avatar/1.jpg",
-      "createdAt": "2023-01-15T00:00:00.000Z",
-      "updatedAt": "2023-10-01T00:00:00.000Z",
-      "boards": [
-        "board1",
-        "board2"
-      ],
-      "role": "admin",
-      "lastLogin": "2023-10-05T10:00:00.000Z",
-      "notificationsSettings": {
-        "emailNotifications": true,
-        "smsNotifications": false,
-        "pushNotifications": true
+  {
+    "users": [
+      {
+        "userId": "user1",
+        "username": "alice_jones",
+        "email": "alice.jones@example.com",
+        "phoneNumber": "+12345678901",
+        "otpCode": "231234",
+        "fullName": "Alice Jones",
+        "profilePictureUrl": "https://mui.com/static/images/avatar/1.jpg",
+        "createdAt": "2023-01-15T00:00:00.000Z",
+        "updatedAt": "2023-10-01T00:00:00.000Z",
+        "boards": [
+          "board1",
+          "board2"
+        ],
+        "role": "admin",
+        "lastLogin": "2023-10-05T10:00:00.000Z",
+        "notificationsSettings": {
+          "emailNotifications": true,
+          "smsNotifications": false,
+          "pushNotifications": true
+        }
+      },
+      {
+        "userId": "user2",
+        "username": "bob_smith",
+        "email": "bob.smith@example.com",
+        "phoneNumber": "+19876543210",
+        "otpCode": "654321",
+        "fullName": "Bob Smith",
+        "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg",
+        "createdAt": "2023-02-20T00:00:00.000Z",
+        "updatedAt": "2023-10-01T00:00:00.000Z",
+        "boards": [
+          "board1"
+        ],
+        "role": "member",
+        "lastLogin": "2023-10-04T14:30:00.000Z",
+        "notificationsSettings": {
+          "emailNotifications": true,
+          "smsNotifications": true,
+          "pushNotifications": false
+        }
+      },
+      {
+        "userId": "user3",
+        "username": "charlie_brown",
+        "email": "charlie.brown@example.com",
+        "phoneNumber": "+12345678902",
+        "otpCode": null,
+        "fullName": "Charlie Brown",
+        "profilePictureUrl": "https://mui.com/static/images/avatar/3.jpg",
+        "createdAt": "2023-03-10T00:00:00.000Z",
+        "updatedAt": "2023-10-01T00:00:00.000Z",
+        "boards": [],
+        "role": "member",
+        "lastLogin": "2023-10-02T09:00:00.000Z",
+        "notificationsSettings": {
+          "emailNotifications": false,
+          "smsNotifications": true,
+          "pushNotifications": true
+        }
+      },
+      {
+        "userId": "user4",
+        "username": "diana_prince",
+        "email": "diana.prince@example.com",
+        "phoneNumber": "+10987654321",
+        "fullName": "Diana Prince",
+        "profilePictureUrl": "https://mui.com/static/images/avatar/4.jpg",
+        "createdAt": "2023-04-05T00:00:00.000Z",
+        "updatedAt": "2023-10-01T00:00:00.000Z",
+        "boards": [
+          "board2"
+        ],
+        "role": "admin",
+        "lastLogin": "2024-08-30T18:02:00.915Z",
+        "notificationsSettings": {
+          "emailNotifications": true,
+          "smsNotifications": true,
+          "pushNotifications": true
+        }
+      },
+      {
+        "userId": "1725041359711",
+        "username": "zohreh-ariamanesh",
+        "email": "zozo@example.com",
+        "fullName": "Zohre Ariamanesh",
+        "phoneNumber": "09104599461",
+        "createdAt": "2024-08-30T18:09:19.711Z",
+        "updatedAt": "2024-08-30T18:09:19.711Z",
+        "lastLogin": "2024-08-31T21:55:32.767Z"
+      },
+      {
+        "userId": "1726087859861",
+        "username": "1726087859861",
+        "phoneNumber": "+989368634672",
+        "createdAt": "2024-09-11T20:50:59.861Z",
+        "updatedAt": "2024-09-11T20:50:59.861Z",
+        "lastLogin": "2024-09-11T21:10:36.347Z"
+      },
+      {
+        "userId": "1725636147152",
+        "phoneNumber": "09912676508",
+        "profilePictureUrl": "https://mui.com/static/images/avatar/5.jpg",
+        "createdAt": "2024-09-06T15:22:27.152Z",
+        "updatedAt": "2024-09-06T15:22:27.152Z",
+        "lastLogin": "2024-09-24T22:26:28.707Z",
+        "boards": [
+          "board4"
+        ]
       }
-    },
-    {
-      "userId": "user2",
-      "username": "bob_smith",
-      "email": "bob.smith@example.com",
-      "phoneNumber": "+19876543210",
-      "otpCode": "654321",
-      "fullName": "Bob Smith",
-      "profilePictureUrl": "https://mui.com/static/images/avatar/2.jpg",
-      "createdAt": "2023-02-20T00:00:00.000Z",
-      "updatedAt": "2023-10-01T00:00:00.000Z",
-      "boards": [
-        "board1"
-      ],
-      "role": "member",
-      "lastLogin": "2023-10-04T14:30:00.000Z",
-      "notificationsSettings": {
-        "emailNotifications": true,
-        "smsNotifications": true,
-        "pushNotifications": false
-      }
-    },
-    {
-      "userId": "user3",
-      "username": "charlie_brown",
-      "email": "charlie.brown@example.com",
-      "phoneNumber": "+12345678902",
-      "otpCode": null,
-      "fullName": "Charlie Brown",
-      "profilePictureUrl": "https://mui.com/static/images/avatar/3.jpg",
-      "createdAt": "2023-03-10T00:00:00.000Z",
-      "updatedAt": "2023-10-01T00:00:00.000Z",
-      "boards": [],
-      "role": "member",
-      "lastLogin": "2023-10-02T09:00:00.000Z",
-      "notificationsSettings": {
-        "emailNotifications": false,
-        "smsNotifications": true,
-        "pushNotifications": true
-      }
-    },
-    {
-      "userId": "user4",
-      "username": "diana_prince",
-      "email": "diana.prince@example.com",
-      "phoneNumber": "+10987654321",
-      "fullName": "Diana Prince",
-      "profilePictureUrl": "https://mui.com/static/images/avatar/4.jpg",
-      "createdAt": "2023-04-05T00:00:00.000Z",
-      "updatedAt": "2023-10-01T00:00:00.000Z",
-      "boards": [
-        "board2"
-      ],
-      "role": "admin",
-      "lastLogin": "2024-08-30T18:02:00.915Z",
-      "notificationsSettings": {
-        "emailNotifications": true,
-        "smsNotifications": true,
-        "pushNotifications": true
-      }
-    },
-    {
-      "userId": "1725041359711",
-      "username": "zohreh-ariamanesh",
-      "email": "zozo@example.com",
-      "fullName": "Zohre Ariamanesh",
-      "phoneNumber": "09104599461",
-      "createdAt": "2024-08-30T18:09:19.711Z",
-      "updatedAt": "2024-08-30T18:09:19.711Z",
-      "lastLogin": "2024-08-31T21:55:32.767Z"
-    },
-    {
-      "userId": "1726087859861",
-      "username": "1726087859861",
-      "phoneNumber": "+989368634672",
-      "createdAt": "2024-09-11T20:50:59.861Z",
-      "updatedAt": "2024-09-11T20:50:59.861Z",
-      "lastLogin": "2024-09-11T21:10:36.347Z"
-    },
-    {
-      "userId": "1725636147152",
-      "phoneNumber": "09912676508",
-      "profilePictureUrl": "https://mui.com/static/images/avatar/5.jpg",
-      "createdAt": "2024-09-06T15:22:27.152Z",
-      "updatedAt": "2024-09-06T15:22:27.152Z",
-      "lastLogin": "2024-09-24T22:26:28.707Z",
-      "boards": [
-        "board4"
-      ]
-    }
-  ]
-}
+    ]
+  }

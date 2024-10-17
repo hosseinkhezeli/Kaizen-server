@@ -1,31 +1,30 @@
-const fs = require('fs');
-const path = require('path');
+import { EdgeConfig } from '@vercel/edge-config';
+import { generateOTP, generateToken } from '../utility/method';
 
-const {generateOTP,generateToken} = require("../utility/method");
+const edgeConfig = new EdgeConfig(process.env.EDGE_CONFIG_ID); // Replace with your Edge Config ID
 
-const userFilePath = path.join(__dirname, '../database/user_database.json');
-
-const readUsersFromFile = () => {
-  const data = fs.readFileSync(userFilePath, 'utf8');
-  return JSON.parse(data);
+// Function to read users from Edge Config
+const readUsersFromConfig = async () => {
+  const usersData = await edgeConfig.get('users');
+  return usersData ? JSON.parse(usersData) : [];
 };
 
-const writeUsersToFile = (users,path) => {
-  fs.writeFileSync(path, JSON.stringify({ users }, null, 2));
+// Function to write users to Edge Config
+const writeUsersToConfig = async (users) => {
+  await edgeConfig.set('users', JSON.stringify(users));
 };
 
-
-
-exports.signUpUser = (req, res) => {
+export const signUpUser = async (req, res) => {
   const { phoneNumber } = req.body;
-  const users = readUsersFromFile().users;
+  const users = await readUsersFromConfig();
+
   // Check if user already exists
   if (users.some(user => user.phoneNumber === phoneNumber)) {
     return res.status(409).json({ message: 'User already exists!' });
   }
 
   const userId = Date.now().toString();
-  const username=Date.now().toString()
+  const username = Date.now().toString();
   const newUser = {
     userId,
     username,
@@ -35,13 +34,13 @@ exports.signUpUser = (req, res) => {
   };
 
   users.push(newUser);
-  writeUsersToFile(users,userFilePath);
+  await writeUsersToConfig(users);
   res.status(201).json({ message: 'User registered successfully!', userId });
 };
 
-exports.signInUser = (req, res) => {
-  const { phoneNumber, otp } = req.body; // Assuming OTP is still used for login
-  const users = readUsersFromFile().users;
+export const signInUser = async (req, res) => {
+  const { phoneNumber, otp } = req.body;
+  const users = await readUsersFromConfig();
   const user = users.find(u => u.phoneNumber === phoneNumber);
 
   if (!user || user.otpCode !== otp) {
@@ -55,19 +54,19 @@ exports.signInUser = (req, res) => {
   // Generate a JWT token for the user
   const token = generateToken(user.userId);
 
-  writeUsersToFile(users,userFilePath);
+  await writeUsersToConfig(users);
   res.status(200).json({
     message: 'Login successful!',
     userId: user.userId,
     username: user.username,
     phoneNumber: user.phoneNumber,
-    token, // Send the token back to the client
+    token,
   });
 };
 
-exports.sendOTP = (req, res) => {
+export const sendOTP = async (req, res) => {
   const { phoneNumber } = req.body;
-  const users = readUsersFromFile().users;
+  const users = await readUsersFromConfig();
   const user = users.find(u => u.phoneNumber === phoneNumber);
 
   if (!user) {
@@ -79,17 +78,17 @@ exports.sendOTP = (req, res) => {
 
   console.log(`Sending OTP ${otpCode} to ${phoneNumber}`);
 
-  writeUsersToFile(users,userFilePath);
+  await writeUsersToConfig(users);
   res.status(200).json({ message: 'OTP sent successfully!', otpCode, phoneNumber });
 };
 
-exports.getUserProfile = (req, res) => {
-  const username = req?.body?.user?.username; // Get userId from the request object set by the middleware
-  const users = readUsersFromFile()?.users;
-  const user = users.find(u => u?.username === username);
+export const getUserProfile = async (req, res) => {
+  const username = req?.body?.user?.username;
+  const users = await readUsersFromConfig();
+  const user = users.find(u => u.username === username);
 
   if (!user) {
-    return res?.status(404).json({ message: 'User not found!' });
+    return res.status(404).json({ message: 'User not found!' });
   }
 
   res.status(200).json(user);
