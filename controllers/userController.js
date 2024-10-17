@@ -1,5 +1,5 @@
 // Use ES Module syntax consistently
-import EdgeConfig from '@vercel/edge-config'; // Import EdgeConfig as a default export
+import {EdgeConfig} from '@vercel/edge-config'; // Import EdgeConfig as a default export
 import { generateOTP, generateToken } from '../utility/method';
 
 // Initialize EdgeConfig with your Edge Config ID
