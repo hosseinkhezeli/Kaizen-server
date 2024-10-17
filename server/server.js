@@ -15,13 +15,13 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Middleware setup
-// app.use(cors({
-//   origin: 'https://kaizen-server-9wz3cb831-hosseinkhezelis-projects.vercel.app', // Replace with your frontend URL
-//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//   credentials: true, // If you need to support credentials
-// }));
+app.use(cors({
+  origin: 'https://kaizen-server.vercel.app', // Replace with your frontend URL
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // If you need to support credentials
+}));
 app.use(bodyParser.json()); // Parse JSON bodies
-// app.use(helmet());
+app.use(helmet());
 // User and Board routes
 app.use('/api/users', userRoutes); // Prefixed with /api for better API structure
 app.use('/api/boards', boardRoutes); // Prefixed with /api for consistency
