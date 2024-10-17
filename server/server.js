@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 // Import routes
 const userRoutes = require('../routes/userRoutes'); // Adjusted path to be relative to app.js
 const boardRoutes = require('../routes/boardRoutes'); // Adjusted path to be relative to app.js
-const helmet = require('helmet');
+// const helmet = require('helmet');
 // Load environment variables from .env file
 dotenv.config();
 
@@ -18,10 +18,10 @@ const PORT = process.env.PORT || 8080;
 app.use(cors({
   origin: 'https://kaizen-server.vercel.app', // Replace with your frontend URL
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // If you need to support credentials
+  // credentials: true, // If you need to support credentials
 }));
 app.use(bodyParser.json()); // Parse JSON bodies
-app.use(helmet());
+// app.use(helmet());
 // User and Board routes
 app.use('/api/users', userRoutes); // Prefixed with /api for better API structure
 app.use('/api/boards', boardRoutes); // Prefixed with /api for consistency
