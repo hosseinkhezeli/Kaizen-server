@@ -1,11 +1,11 @@
-
-const { EdgeConfig } = require('@vercel/edge-config');
+// Use ES Module syntax consistently
+import EdgeConfig from '@vercel/edge-config'; // Import EdgeConfig as a default export
 import { generateOTP, generateToken } from '../utility/method';
-// Import the EdgeConfig class
 
 // Initialize EdgeConfig with your Edge Config ID
 const edgeConfig = new EdgeConfig(process.env.EDGE_CONFIG_ID);
 console.log('Edge Config ID:', process.env.EDGE_CONFIG_ID);
+
 // Example function to read users from Edge Config
 const readUsersFromConfig = async () => {
   const usersData = await edgeConfig.get('users');
@@ -27,7 +27,7 @@ export const signUpUser = async (req, res) => {
   }
 
   const userId = Date.now().toString();
-  const username = Date.now().toString();
+  const username = Date.now().toString(); // Consider using a more meaningful username
   const newUser = {
     userId,
     username,
