@@ -13,7 +13,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-const allowedOrigins = ['http://localhost:3000', 'https://kaizzen.vercel.app/'];
+const allowedOrigins = ['http://localhost:3000', 'https://kaizzen.vercel.app'];
 // Middleware setup
 app.use(cors({
   origin:allowedOrigins, // Replace with your frontend URL
