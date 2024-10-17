@@ -15,11 +15,11 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Middleware setup
-app.use(cors({
-  origin: 'https://kaizen-server-9wz3cb831-hosseinkhezelis-projects.vercel.app', // Replace with your frontend URL
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // If you need to support credentials
-}));
+// app.use(cors({
+//   origin: 'https://kaizen-server-9wz3cb831-hosseinkhezelis-projects.vercel.app', // Replace with your frontend URL
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//   credentials: true, // If you need to support credentials
+// }));
 app.use(bodyParser.json()); // Parse JSON bodies
 // app.use(helmet());
 // User and Board routes
@@ -32,6 +32,9 @@ app.use('/api/boards', boardRoutes); // Prefixed with /api for consistency
 //   res.status(500).json({ message: 'Something went wrong!' }); // Send a generic error response
 // });
 
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hello from API!' });
+});
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
