@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 8080;
 
 // Middleware setup
 app.use(cors({
-  origin: 'https://kaizen-server.vercel.app', // Replace with your frontend URL
+  origin: 'https://kaizzen.vercel.app', // Replace with your frontend URL
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   // credentials: true, // If you need to support credentials
 }));
