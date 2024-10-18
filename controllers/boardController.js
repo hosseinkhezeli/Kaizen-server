@@ -1,59 +1,94 @@
-const fs = require('fs');
-const path = require('path');
-
-
-const boardFilePath = path.join(__dirname, '../database/board_database.json');
-const usersFilePath = path.join(__dirname, '../database/user_database.json');
+import axios from 'axios'; // Import axios for making HTTP requests
+import { createClient } from '@vercel/edge-config'; // Import Edge Config client
+const EDGE_CONFIG_ID = 'ecfg_1e7ncqy61tzmxkz9fiwwbktab1bm'; // Replace with your actual Edge Config ID
+const API_TOKEN = 'b5d60a6e-62ca-4ffb-b49d-0d00899ad934'; // Replace with your Vercel API token
+const edgeConfigClient = createClient("https://edge-config.vercel.com/ecfg_1e7ncqy61tzmxkz9fiwwbktab1bm?token=b5d60a6e-62ca-4ffb-b49d-0d00899ad934");
 // Utility functions to read and write boards
-const readBoardsFromFile = () => {
-  const data = fs.readFileSync(boardFilePath, 'utf8');
-  return JSON.parse(data).boards;
+const readBoardsFromConfig = async () => {
+  try{
+    const boardsData = await edgeConfigClient.get('boards');
+
+      return typeof boardsData === 'string' ? JSON.parse(boardsData) : boardsData;
+
+  } catch (error) {
+    console.error('Error reading boards from Edge Config:', error);
+    return { users: [] };
+  }
 };
 
-const readUsersFromFile = () => {
-  const data = fs.readFileSync(usersFilePath, 'utf8');
-  return JSON.parse(data).users;
+const writeBoardsToConfig = async (boards) => {
+  try {
+    await axios.post(`https://edge-config.vercel.com/${EDGE_CONFIG_ID}/item`, {
+      key: 'boards',
+      value: JSON.stringify(boards),
+    }, {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (error) {
+    console.error('Error writing boards to Edge Config:', error);
+  }
 };
 
-const writeBoardsToFile = (boards) => {
-  fs.writeFileSync(boardFilePath, JSON.stringify({ boards }, null, 2));
+const readUsersFromConfig = async () => {
+  try{
+    const usersData = await edgeConfigClient.get('users');
+
+      return typeof usersData === 'string' ? JSON.parse(usersData) : usersData;
+
+  } catch (error) {
+    console.error('Error reading users from Edge Config:', error);
+    return { users: [] };
+  }
 };
-const writeUsersToFile = (users) => {
-  fs.writeFileSync(usersFilePath, JSON.stringify({ users }, null, 2));
+
+const writeUsersToConfig = async (users) => {
+  try {
+    await axios.post(`https://edge-config.vercel.com/${EDGE_CONFIG_ID}/item`, {
+      key: 'users',
+      value: JSON.stringify(users),
+    }, {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (error) {
+    console.error('Error writing users to Edge Config:', error);
+  }
 };
+
 // Get dashboard info
-exports.getDashboardInfo = (req, res) => {
-  const userId = req.query.userId;
+export const getDashboardInfo = async (req, res) => {
+  const { userId } = req.query;
   if (!userId) {
     return res.status(400).json({ message: 'User ID is required' });
   }
 
-  const boards = readBoardsFromFile();
+  const boards = await readBoardsFromConfig();
+
   const userBoards = boards.filter(board =>
     board.members.some(member => member.id === userId)
   );
 
-  const userColumns = userBoards?.reduce((acc, curr) => {
-    if (acc?.length) {
-      return [...acc, curr.columns];
-    } else {
-      return [curr?.columns];
-    }
+  const userColumns = userBoards.reduce((acc, curr) => {
+    acc.push(curr.columns);
+    return acc;
   }, []);
 
-  const highPriorityCards = userColumns?.flat()?.reduce((acc, curr,idx) => {
-    // console.log(curr,idx)
+  const highPriorityCards = userColumns.flat().reduce((acc, curr) => {
     if (curr?.taskCards?.length) {
-
       const foundCard = curr.taskCards.find(card => card.priority === 'High');
       if (foundCard) {
-        acc.push(foundCard); // Add found card to the accumulator
+        acc.push(foundCard);
       }
     }
-    return acc; // Ensure to return the accumulator
+    return acc;
   }, []);
 
-  const boardsInfo = userBoards?.map(board => ({
+  const boardsInfo = userBoards.map(board => ({
     id: board.id,
     title: board.title,
     description: board.description,
@@ -64,29 +99,28 @@ exports.getDashboardInfo = (req, res) => {
   setTimeout(() => {
     res.json({
       count: userBoards.length,
-      data: {boards:boardsInfo,cards:highPriorityCards}
+      data: { boards: boardsInfo, cards: highPriorityCards }
     });
-  }, 2000); 
+  }, 2000);
 };
 
-
-
 // Create a board
-exports.createBoard = (req, res) => {
-  const { title, description,userId } = req.body;
-  const users = readUsersFromFile()
-  const otherUsers=users.filter((user)=>user?.userId!==userId)
-  const user=JSON.parse(JSON.stringify(users.find(user=>user.userId===userId)))
-  const boards = readBoardsFromFile();
+export const createBoard = async (req, res) => {
+  const { title, description, userId } = req.body;
+  const users = await readUsersFromConfig();
+  const otherUsers = users.filter(user => user?.userId !== userId);
+  const user = { ...users.find(user => user.userId === userId) };
+  const boards = await readBoardsFromConfig();
+
   const newBoard = {
     id: `board${boards.length + 1}`,
     title,
     description,
     lists: [],
     members: [{
-      "id": user?.userId,
-      "fullName": user?.fullName,
-      "profilePictureUrl": user?.profilePictureUrl
+      id: user?.userId,
+      fullName: user?.fullName,
+      profilePictureUrl: user?.profilePictureUrl
     }],
     memberCount: 1,
     createdAt: new Date(),
@@ -97,21 +131,19 @@ exports.createBoard = (req, res) => {
     stickers: [],
     activity: []
   };
-  if(user?.boards?.length>0){
-    user.boards.push(`board${boards.length + 1}`)
-  }else{
-    user.boards=[`board${boards.length + 1}`]
-  }
+
+  user.boards = user.boards ? [...user.boards, newBoard.id] : [newBoard.id];
   boards.push(newBoard);
-  writeBoardsToFile(boards);
-  writeUsersToFile([...otherUsers,user])
+  await writeBoardsToConfig(boards);
+  await writeUsersToConfig([...otherUsers, user]);
   res.status(200).json(newBoard);
 };
 
 // Get all boards
-exports.getAllBoards = (req, res) => {
-  const boards = readBoardsFromFile();
-  const userBoards =boards.filter(b => b.members.find(member=>member.id===req.body.username) ) ;
+export const getAllBoards = async (req, res) => {
+  const boards = await readBoardsFromConfig();
+  const userBoards = boards.filter(b => b.members.some(member => member.id === req.body.username));
+
   if (!userBoards.length) {
     return res.status(404).json({ message: 'Board not found' });
   }
@@ -119,52 +151,57 @@ exports.getAllBoards = (req, res) => {
 };
 
 // Get a specific board by ID
-exports.getBoardById = (req, res) => {
-  const boards = readBoardsFromFile();
+export const getBoardById = async (req, res) => {
+  const boards = await readBoardsFromConfig();
   const board = boards.find(b => b.id === req.params.id);
+
   if (!board) {
     return res.status(404).json({ message: 'Board not found' });
   }
-  
-  setTimeout(() => {
-    res.json(board)
-  }, 2000); 
 
+  setTimeout(() => {
+    res.json(board);
+  }, 2000);
 };
 
 // Update a board
-exports.updateBoard = (req, res) => {
-  const boards = readBoardsFromFile();
+export const updateBoard = async (req, res) => {
+  const boards = await readBoardsFromConfig();
   const boardIndex = boards.findIndex(b => b.id === req.params.id);
+
   if (boardIndex === -1) {
     return res.status(404).json({ message: 'Board not found' });
   }
+
   const updatedBoard = {
     ...boards[boardIndex],
     ...req.body,
     updatedAt: new Date()
   };
+
   boards[boardIndex] = updatedBoard;
-  writeBoardsToFile(boards);
+  await writeBoardsToConfig(boards);
   res.json(updatedBoard);
 };
 
 // Delete a board
-exports.deleteBoard = (req, res) => {
-  const boards = readBoardsFromFile();
+export const deleteBoard = async (req, res) => {
+  const boards = await readBoardsFromConfig();
   const boardIndex = boards.findIndex(b => b.id === req.params.id);
+
   if (boardIndex === -1) {
     return res.status(404).json({ message: 'Board not found' });
   }
+
   boards.splice(boardIndex, 1);
-  writeBoardsToFile(boards);
+  await writeBoardsToConfig(boards);
   res.status(204).send();
 };
 
 // Assign users to a board as members
-exports.assignUsersToBoard = (req, res) => {
+export const assignUsersToBoard = async (req, res) => {
   const { boardId, members } = req.body; // members is an array of objects with id, fullName, and profilePictureUrl
-  const boards = readBoardsFromFile();
+  const boards = await readBoardsFromConfig();
   const boardIndex = boards.findIndex(b => b.id === boardId);
 
   if (boardIndex === -1) {
@@ -175,12 +212,11 @@ exports.assignUsersToBoard = (req, res) => {
 
   // Add members to the board
   members.forEach(member => {
-    // Check if the user is already a member
     if (!board.members.some(m => m.id === member.id)) {
       board.members.push(member);
     }
   });
 
-  writeBoardsToFile(boards);
-  res.json({ message: 'Users assigned to board successfully!', board });
-}
+  await writeBoardsToConfig(boards);
+  res.json({ message: 'Users assigned to board successfully!' });
+};

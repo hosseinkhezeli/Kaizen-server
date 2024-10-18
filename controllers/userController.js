@@ -1,20 +1,40 @@
-// Use ES Module syntax consistently
-import {EdgeConfig} from '@vercel/edge-config'; // Import EdgeConfig as a default export
-import { generateOTP, generateToken } from '../utility/method';
+import axios from 'axios'; // Import axios for making HTTP requests
+import { generateOTP, generateToken } from '../utility/method.js';
+import { createClient } from '@vercel/edge-config'; // Import Edge Config client
 
-// Initialize EdgeConfig with your Edge Config ID
-const edgeConfig = new EdgeConfig(process.env.EDGE_CONFIG_ID);
-console.log('Edge Config ID:', process.env.EDGE_CONFIG_ID);
+const EDGE_CONFIG_ID = 'ecfg_1e7ncqy61tzmxkz9fiwwbktab1bm'; // Replace with your actual Edge Config ID
+const API_TOKEN = 'b5d60a6e-62ca-4ffb-b49d-0d00899ad934'; // Replace with your Vercel API token
+const edgeConfigClient = createClient("https://edge-config.vercel.com/ecfg_1e7ncqy61tzmxkz9fiwwbktab1bm?token=b5d60a6e-62ca-4ffb-b49d-0d00899ad934");
 
-// Example function to read users from Edge Config
+// Function to read users from Edge Config
 const readUsersFromConfig = async () => {
-  const usersData = await edgeConfig.get('users');
-  return usersData ? JSON.parse(usersData) : [];
+  try{
+    const usersData = await edgeConfigClient.get('users');
+
+      return typeof usersData === 'string' ? JSON.parse(usersData) : usersData;
+
+  } catch (error) {
+    console.error('Error reading users from Edge Config:', error);
+    return { users: [] };
+  }
 };
+
 
 // Function to write users to Edge Config
 const writeUsersToConfig = async (users) => {
-  await edgeConfig.set('users', JSON.stringify(users));
+  try {
+    await axios.post(`https://edge-config.vercel.com/${EDGE_CONFIG_ID}/item`, {
+      key: 'users',
+      value: JSON.stringify(users),
+    }, {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (error) {
+    console.error('Error writing users to Edge Config:', error);
+  }
 };
 
 export const signUpUser = async (req, res) => {
@@ -44,6 +64,7 @@ export const signUpUser = async (req, res) => {
 export const signInUser = async (req, res) => {
   const { phoneNumber, otp } = req.body;
   const users = await readUsersFromConfig();
+
   const user = users.find(u => u.phoneNumber === phoneNumber);
 
   if (!user || user.otpCode !== otp) {
@@ -71,7 +92,6 @@ export const sendOTP = async (req, res) => {
   const { phoneNumber } = req.body;
   const users = await readUsersFromConfig();
   const user = users.find(u => u.phoneNumber === phoneNumber);
-
   if (!user) {
     return res.status(404).json({ message: 'User not found!' });
   }

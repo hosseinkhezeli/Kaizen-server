@@ -1,44 +1,68 @@
-const fs = require('fs');
-const path = require('path');
+import axios from 'axios'; // Import axios for making HTTP requests
+import path from 'path';
 
+const EDGE_CONFIG_ID = 'ecfg_1e7ncqy61tzmxkz9fiwwbktab1bm'; // Replace with your actual Edge Config ID
+const API_TOKEN = 'b5d60a6e-62ca-4ffb-b49d-0d00899ad934'; // Replace with your Vercel API token
 
-const boardFilePath = path.join(__dirname, '../database/board_database.json');
-
-// Utility functions to read boards
-const readBoardsFromFile = () => {
-  const data = fs.readFileSync(boardFilePath, 'utf8');
-  return JSON.parse(data).boards;
+// Utility functions to read and write boards
+const readBoardsFromConfig = async () => {
+  try {
+    const response = await axios.get(`https://edge-config.vercel.com/${EDGE_CONFIG_ID}/item/boards`, {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+      },
+    });
+    return response.data ? JSON.parse(response.data.value) : { boards: [] };
+  } catch (error) {
+    console.error('Error reading boards from Edge Config:', error);
+    return { boards: [] };
+  }
 };
-const writeBoardsToFile = (boards) => {
-  fs.writeFileSync(boardFilePath, JSON.stringify({ boards }, null, 2));
+
+const writeBoardsToConfig = async (boards) => {
+  try {
+    await axios.post(`https://edge-config.vercel.com/${EDGE_CONFIG_ID}/item`, {
+      key: 'boards',
+      value: JSON.stringify(boards),
+    }, {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (error) {
+    console.error('Error writing boards to Edge Config:', error);
+  }
 };
+
 const generateUniqueId = () => {
   return 'id_' + Math.random().toString(36).substr(2, 9); // Simple unique ID generator
 };
+
 // Get all columns (lists) of a specific board
-exports.getColumnsByBoardId = (req, res) => {
+export const getColumnsByBoardId = async (req, res) => {
   const { boardId } = req.params;
-  const boards = readBoardsFromFile();
-  const board = boards?.find?.(b => b.id === boardId);
+  const { boards } = await readBoardsFromConfig();
+  const board = boards.find(b => b.id === boardId);
 
   if (!board) {
     return res.status(404).json({ message: 'Board not found' });
   }
 
-  res.json(board || []);
+  res.json(board.columns || []);
 };
 
 // Get a specific column by ID
-exports.getColumnById = (req, res) => {
+export const getColumnById = async (req, res) => {
   const { boardId, columnId } = req.params;
-  const boards = readBoardsFromFile();
-  const board = boards?.find?.(b => b.id === boardId);
+  const { boards } = await readBoardsFromConfig();
+  const board = boards.find(b => b.id === boardId);
 
   if (!board) {
     return res.status(404).json({ message: 'Board not found' });
   }
 
-  const column = board?.columns?.find?.(c => c.id === columnId);
+  const column = board.columns.find(c => c.id === columnId);
   if (!column) {
     return res.status(404).json({ message: 'Column not found' });
   }
@@ -47,34 +71,34 @@ exports.getColumnById = (req, res) => {
 };
 
 // Update a specific column by ID
-exports.updateColumn = (req, res) => {
+export const updateColumn = async (req, res) => {
   const { boardId, columnId } = req.params;
-  const boards = readBoardsFromFile();
-  const board = boards?.find?.(b => b.id === boardId);
+  const { boards } = await readBoardsFromConfig();
+  const board = boards.find(b => b.id === boardId);
 
   if (!board) {
     return res.status(404).json({ message: 'Board not found' });
   }
 
-  const columnIndex = board?.columns?.findIndex?.(c => c.id === columnId);
+  const columnIndex = board.columns.findIndex(c => c.id === columnId);
   if (columnIndex === -1) {
     return res.status(404).json({ message: 'Column not found' });
   }
 
   const updatedColumn = {
-    ...board?.columns?.[columnIndex],
-    ...req?.body,
+    ...board.columns[columnIndex],
+    ...req.body,
   };
 
   board.columns[columnIndex] = updatedColumn;
-  writeBoardsToFile(boards);
+  await writeBoardsToConfig(boards);
   res.json(updatedColumn);
 };
 
 // Delete a specific column by ID
-exports.deleteColumn = (req, res) => {
+export const deleteColumn = async (req, res) => {
   const { boardId, columnId } = req.params;
-  const boards = readBoardsFromFile();
+  const { boards } = await readBoardsFromConfig();
   const board = boards.find(b => b.id === boardId);
 
   if (!board) {
@@ -87,29 +111,29 @@ exports.deleteColumn = (req, res) => {
   }
 
   board.columns.splice(columnIndex, 1);
-  writeBoardsToFile(boards);
+  await writeBoardsToConfig(boards);
   res.status(204).send();
-}
+};
 
-// Add this function to your columnController
-exports.createColumn = (req, res) => {
+// Create a new column
+export const createColumn = async (req, res) => {
   const { boardId } = req.params;
   const { title, position } = req.body; // Expect title and position in the request body
-  const boards = readBoardsFromFile();
-  const board = boards?.find?.(b => b.id === boardId);
+  const { boards } = await readBoardsFromConfig();
+  const board = boards.find(b => b.id === boardId);
 
   if (!board) {
     return res.status(404).json({ message: 'Board not found' });
   }
 
   const newColumn = {
-    id: generateUniqueId(), // Implement a function to generate unique IDs
+    id: generateUniqueId(),
     title,
     taskCards: [],
-    position
+    position,
   };
 
-  board?.columns?.push(newColumn); // Assuming 'columns' is the property for columns
-  writeBoardsToFile(boards); // Save the updated board back to the file
-  res.status(201).json(newColumn); // Return the created column
+  board.columns.push(newColumn);
+  await writeBoardsToConfig(boards);
+  res.status(201).json(newColumn);
 };

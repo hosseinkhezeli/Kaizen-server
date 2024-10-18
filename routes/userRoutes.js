@@ -1,11 +1,12 @@
-const express = require('express');
-const userController = require('../controllers/userController');
+import express from 'express';
+import * as userController from '../controllers/userController.js'; // Use ES Module syntax
 
-const router = express.Router();
+const userRoutes = express.Router();
 
 // Define your routes
-router.post('/sign-up', userController.signUpUser);
-router.post('/sign-in', userController.signInUser);
-router.get('/profile', userController.getUserProfile);
-router.post('/send-otp', userController.sendOTP);
-module.exports = router;
+userRoutes.post('/sign-up', userController.signUpUser);
+userRoutes.post('/sign-in', userController.signInUser);
+userRoutes.get('/profile', userController.getUserProfile);
+userRoutes.post('/send-otp', userController.sendOTP);
+
+export default userRoutes; // Use ES Module export

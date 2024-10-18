@@ -1,44 +1,35 @@
-const express = require('express');
-const router = express.Router();
-const boardController = require('../controllers/boardController');
-const columnController = require('../controllers/columnController');
-const taskCardController = require('../controllers/taskCardController');
+import express from 'express';
+import * as boardController from '../controllers/boardController.js'; // Use ES Module syntax
+import * as columnController from '../controllers/columnController.js'; // Use ES Module syntax
+import * as taskCardController from '../controllers/taskCardController.js'; // Use ES Module syntax
+
+const boardRoutes = express.Router();
 
 // Board routes
-router.post('/', boardController.createBoard);
-router.get('/', boardController.getAllBoards);
-router.get('/:id', boardController.getBoardById);
-router.put('/:id', boardController.updateBoard);
-router.delete('/:id', boardController.deleteBoard);
-router.post('/assign', boardController.assignUsersToBoard);
+boardRoutes.post('/', boardController.createBoard);
+boardRoutes.get('/', boardController.getAllBoards);
+boardRoutes.get('/:id', boardController.getBoardById);
+boardRoutes.put('/:id', boardController.updateBoard);
+boardRoutes.delete('/:id', boardController.deleteBoard);
+boardRoutes.post('/assign', boardController.assignUsersToBoard);
 
-//Dashboard routes
-router.get('/dashboard/data', boardController.getDashboardInfo);
+// Dashboard routes
+boardRoutes.get('/dashboard/data', boardController.getDashboardInfo);
+
 // Column routes
-router.get('/:boardId/columns', columnController.getColumnsByBoardId);
-router.get(
-  '/:boardId/columns/:columnId',
-  columnController.getColumnById,
-);
-router.put('/:boardId/columns/:columnId', columnController.updateColumn);
-router.delete(
-  '/:boardId/columns/:columnId',
-  columnController.deleteColumn,
-);
-router.post('/:boardId/columns', columnController.createColumn);
-// Task Card routes
-router.get('/columns/:columnId/cards', taskCardController.getCardsByColumnId);
-router.get('/columns/:columnId/cards/:cardId', taskCardController.getCardById);
-router.put('/columns/move-card', taskCardController.updateCard);
-router.delete(
-  '/columns/:columnId/cards/:cardId',
-  taskCardController.deleteCard,
-);
-router.post(
-  '/columns/:columnId/cards/:cardId/members',
-  taskCardController.addMembersToCard,
-);
-router.post('/columns/:columnId/cards', taskCardController.createCard);
+boardRoutes.get('/:boardId/columns', columnController.getColumnsByBoardId);
+boardRoutes.get('/:boardId/columns/:columnId', columnController.getColumnById);
+boardRoutes.put('/:boardId/columns/:columnId', columnController.updateColumn);
+boardRoutes.delete('/:boardId/columns/:columnId', columnController.deleteColumn);
+boardRoutes.post('/:boardId/columns', columnController.createColumn);
 
-// Export the router
-module.exports = router;
+// Task Card routes
+boardRoutes.get('/columns/:columnId/cards', taskCardController.getCardsByColumnId);
+boardRoutes.get('/columns/:columnId/cards/:cardId', taskCardController.getCardById);
+boardRoutes.put('/columns/move-card', taskCardController.updateCard);
+boardRoutes.delete('/columns/:columnId/cards/:cardId', taskCardController.deleteCard);
+boardRoutes.post('/columns/:columnId/cards/:cardId/members', taskCardController.addMembersToCard);
+boardRoutes.post('/columns/:columnId/cards', taskCardController.createCard);
+
+// Export the boardRoutes
+export default boardRoutes; // Use ES Module export
